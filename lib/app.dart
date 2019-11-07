@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timestampphy/router/Router.dart';
+import 'package:timestampphy/router/router.dart';
 
 class App extends StatelessWidget {
   @override
