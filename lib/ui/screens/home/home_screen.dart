@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:timestampphy/ui/widgets/bottom_tab_navigation.dart';
+import 'package:timestampphy/ui/screens/home/tabs/photo_history.dart';
+import 'package:timestampphy/ui/screens/home/tabs/photo_search.dart';
+
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -25,15 +28,11 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             Offstage(
               offstage: _selectedTabIndex != 0,
-              child: Center(
-                child: Text("Page 1")
-              )
+              child: PhotoHistoryTab()
             ),
             Offstage(
                 offstage: _selectedTabIndex != 1,
-                child: Center(
-                    child: Text("Page 2")
-                )
+                child: PhotoSearchTab()
             )
           ],
         ),
