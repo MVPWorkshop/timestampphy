@@ -41,5 +41,12 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+
+	<key>NSCameraUsageDescription</key>
+    <string>Allow Timestampphy to use your devices camera</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Allow Timestampphy to use your devices microphone</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Allow Timestampphy to access you pictures</string>
 </dict>
 </plist>

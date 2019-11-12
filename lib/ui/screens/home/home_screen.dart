@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:timestampphy/ui/widgets/bottom_tab_navigation.dart';
 import 'package:timestampphy/ui/screens/home/tabs/photo_history.dart';
 import 'package:timestampphy/ui/screens/home/tabs/photo_search.dart';
-
+import 'package:timestampphy/router/router.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -17,6 +17,10 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedTabIndex = index;
     });
+  }
+
+  void _openCameraScreen(BuildContext context) {
+    Navigator.pushNamed(context, Routes.TakePictureScreen);
   }
 
   @override
@@ -51,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Icons.camera,
             color: Colors.lightBlueAccent
         ),
-        onPressed: () => {/*Will open camera*/},
+        onPressed: () => this._openCameraScreen(context),
         backgroundColor: Colors.white,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
