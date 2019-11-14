@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart' show join;
-import 'package:path_provider/path_provider.dart';
+import 'package:timestampphy/core/utils/camera_util.dart';
 import 'package:timestampphy/router/router.dart';
 import 'package:timestampphy/ui/screens/confirm_picture/confirm_picture_screen.dart';
 
@@ -12,9 +10,7 @@ class TakePictureScreen extends StatefulWidget {
 }
 
 class TakePictureScreenState extends State<TakePictureScreen> {
-  CameraDescription camera;
-  CameraController _controller;
-  Future<void> _initializeControllerFuture;
+  CameraUtil cameraUtil;
 
   @override
   void initState() {
@@ -24,65 +20,39 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   @override
   void dispose() {
-    // Dispose of the controller when the widget is disposed.
-    _controller.dispose();
+    cameraUtil.dispose();
     super.dispose();
   }
 
   void _initCamera() async {
-    List<CameraDescription> allCameras = await availableCameras();
-    camera = allCameras.first;
+    cameraUtil = new CameraUtil();
+    await cameraUtil.isCameraInitialized;
 
-    setState(() {
-      _controller = CameraController(
-        camera,
-        ResolutionPreset.veryHigh
-      );
+    if(!mounted) {
+      return;
+    }
 
-      _initializeControllerFuture = _controller.initialize();
-    });
+    setState(() {});
   }
 
   void _takePicture() async{
-    try {
-      await _initializeControllerFuture;
+    String tempPicturePath = await cameraUtil.takePicture();
 
-      final path = join(
-        (await getTemporaryDirectory()).path,
-        '${DateTime.now()}.png',
-      );
-
-      await _controller.takePicture(path);
-
-      Navigator.pushNamed(
-          context,
-          Routes.ConfirmPictureScreen,
-          arguments: new ConfirmPictureScreenArgs(imagePath: path)
-      );
-    } catch (e) {
-      print(e);
-    }
+    Navigator.pushNamed(
+        context,
+        Routes.ConfirmPictureScreen,
+        arguments: new ConfirmPictureScreenArgs(picturePath: tempPicturePath)
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       body: FutureBuilder<void>(
-        future: _initializeControllerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Center(
-              child: AspectRatio(
-                child: CameraPreview(_controller),
-                aspectRatio: _controller.value.aspectRatio,
-              )
-            );
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
+        future: cameraUtil.isCameraInitialized,
+        builder: this._buildCameraPreview,
       ),
+      backgroundColor: Colors.black,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.camera, color: Colors.lightBlueAccent),
@@ -90,5 +60,20 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         onPressed: this._takePicture,
       ),
     );
+  }
+
+  Widget _buildCameraPreview(context, snapshot) {
+    var cameraController = cameraUtil.cameraController;
+
+    if (snapshot.connectionState == ConnectionState.done) {
+      return Center(
+          child: AspectRatio(
+            child: CameraPreview(cameraController),
+            aspectRatio: cameraController.value.aspectRatio,
+          )
+      );
+    } else {
+      return Center(child: CircularProgressIndicator());
+    }
   }
 }

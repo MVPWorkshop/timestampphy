@@ -27,6 +27,7 @@ dependencies:
   camera:
   path_provider:
   path:
+  rxdart:
 
 dev_dependencies:
   flutter_test:
