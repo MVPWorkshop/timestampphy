@@ -50,6 +50,12 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomTabNavigationItem(iconData: Icons.search, text: "Photo search")
         ],
       ),
+      appBar: AppBar(
+        title: Text(
+            _selectedTabIndex == 0 ? "Pictures you took" : "Search for a picture"
+        ),
+        backgroundColor: Colors.lightBlueAccent
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(
             Icons.camera,
