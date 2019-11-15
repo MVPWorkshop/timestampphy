@@ -55,9 +55,11 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: FutureBuilder<void>(
-          future: cameraUtil.isCameraInitialized,
-          builder: this._buildCameraPreview,
+        body: SafeArea(
+          child: FutureBuilder<void>(
+            future: cameraUtil.isCameraInitialized,
+            builder: this._buildCameraPreview,
+          ),
         ),
         backgroundColor: Colors.black,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

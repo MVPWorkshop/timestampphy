@@ -48,12 +48,13 @@ class PictureBloc implements BlocBase {
       PictureModel pictureModel = new PictureModel(
           picturePath: picturePath,
           pictureHash: pictureHash,
-          txHash: 'txHash'
+          txHash: '0x6047c376e150c8d3cc7078133878b76ddf3dd274a619d3b645f41c43be4ace7e'
       );
 
       //Getting current picture List and adding the new one
       List<PictureModel> newListOfPictures = _takenPicturesSubject.value;
-      newListOfPictures.add(pictureModel);
+//      newListOfPictures.add(pictureModel);
+      newListOfPictures.insert(0, pictureModel);
 
       //Creating json file to persist data to
       String persistedJsonPath = '${deviceDirectory.path}/$PersistedJsonName.json';

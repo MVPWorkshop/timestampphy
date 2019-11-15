@@ -21,15 +21,18 @@ class ConfirmPictureScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(
-        child: Image.file(File(args.picturePath)),
+      body: SafeArea(
+        child: Center(
+          child: Image.file(File(args.picturePath)),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check, color: Colors.lightBlueAccent),
         backgroundColor: Colors.white,
         onPressed: () {
           pictureBloc.addNewPicture(args.picturePath);
-          Navigator.pushNamed(context, Routes.HomeScreen);
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              Routes.HomeScreen, (Route<dynamic> route) => false);
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
