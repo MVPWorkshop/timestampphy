@@ -28,6 +28,7 @@ dependencies:
   path_provider:
   path:
   rxdart:
+  crypto:
 
 dev_dependencies:
   flutter_test:

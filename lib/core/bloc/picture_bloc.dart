@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:crypto/crypto.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timestampphy/core/bloc/bloc_base.dart';
@@ -40,9 +41,13 @@ class PictureBloc implements BlocBase {
           '${deviceDirectory.path}/$AllPicturesSubPath/$pictureFileName.jpg';
       await thePicture.copy(picturePath);
 
+      //Getting hash of the picture
+      List<int> pictureInBytes = await thePicture.readAsBytes();
+      String pictureHash = sha256.convert(pictureInBytes).toString();
+
       PictureModel pictureModel = new PictureModel(
           picturePath: picturePath,
-          pictureHash: 'pictureHash',
+          pictureHash: pictureHash,
           txHash: 'txHash'
       );
 
