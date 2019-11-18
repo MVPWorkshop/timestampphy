@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:timestampphy/core/models/picture_model.dart';
 
 class PictureInfo extends StatelessWidget {
@@ -12,7 +13,7 @@ class PictureInfo extends StatelessWidget {
     const labelTextStyle = TextStyle(
         fontSize: 20, fontWeight: FontWeight.bold, color: Colors.lightBlue);
 
-    const textValue = TextStyle(fontSize: 12);
+    const textValue = TextStyle(fontSize: 14);
 
     return Card(
         shape:
@@ -36,8 +37,11 @@ class PictureInfo extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text("Picture hash", style: labelTextStyle),
-                          SelectableText(picture.pictureHash, style: textValue),
+                          Text("Time", style: labelTextStyle),
+                          SelectableText(
+                              DateFormat('MMM dd yyyy, HH:m').format(picture.date),
+                              style: textValue
+                          ),
                           SizedBox(height: 15),
                           Text("Transaction hash", style: labelTextStyle),
                           SelectableText(picture.txHash, style: textValue)

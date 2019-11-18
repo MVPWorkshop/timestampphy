@@ -26,6 +26,9 @@ class PictureBloc implements BlocBase {
 
   _handleNewPictures(String tempPicturePath) async {
     try {
+
+      DateTime currentDate = DateTime.now();
+
       //Getting the reserved app data folder on device
       Directory deviceDirectory = await getExternalStorageDirectory();
 
@@ -36,7 +39,7 @@ class PictureBloc implements BlocBase {
       File thePicture = File(tempPicturePath);
 
       //Copying the picture to app data folder
-      String pictureFileName = DateTime.now().toIso8601String();
+      String pictureFileName = currentDate.toIso8601String();
       String picturePath =
           '${deviceDirectory.path}/$AllPicturesSubPath/$pictureFileName.jpg';
       await thePicture.copy(picturePath);
@@ -46,14 +49,14 @@ class PictureBloc implements BlocBase {
       String pictureHash = sha256.convert(pictureInBytes).toString();
 
       PictureModel pictureModel = new PictureModel(
-          picturePath: picturePath,
-          pictureHash: pictureHash,
-          txHash: '0x6047c376e150c8d3cc7078133878b76ddf3dd274a619d3b645f41c43be4ace7e'
+        picturePath: picturePath,
+        pictureHash: pictureHash,
+        txHash: '0x6047c376e150c8d3cc7078133878b76ddf3dd274a619d3b645f41c43be4ace7e',
+        pictureTimestamp: currentDate.millisecondsSinceEpoch
       );
 
       //Getting current picture List and adding the new one
       List<PictureModel> newListOfPictures = _takenPicturesSubject.value;
-//      newListOfPictures.add(pictureModel);
       newListOfPictures.insert(0, pictureModel);
 
       //Creating json file to persist data to
