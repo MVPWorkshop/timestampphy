@@ -59,6 +59,7 @@ class _PhotoSearchTabState extends State<PhotoSearchTab> {
     PictureModel fakePic = new PictureModel(
         picturePath: _selectedPicture.path,
         pictureHash: _selectedPictureHash,
+        pictureTimestamp: DateTime.now().millisecondsSinceEpoch,
         txHash:
             '0x6047c376e150c8d3cc7078133878b76ddf3dd274a619d3b645f41c43be4ace7e');
 

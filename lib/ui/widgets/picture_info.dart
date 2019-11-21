@@ -39,7 +39,7 @@ class PictureInfo extends StatelessWidget {
                         children: <Widget>[
                           Text("Time", style: labelTextStyle),
                           SelectableText(
-                              DateFormat('MMM dd yyyy, HH:m').format(picture.date),
+                              DateFormat('MMM dd yyyy, HH:mm').format(picture.date),
                               style: textValue
                           ),
                           SizedBox(height: 15),
