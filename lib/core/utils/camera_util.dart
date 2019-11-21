@@ -48,6 +48,8 @@ class CameraUtil {
     }
   }
 
+  Function get reinitializeCamera => _initCamera;
+
   Future<String> takePicture() async {
     try {
       final tempPicturePath = join(

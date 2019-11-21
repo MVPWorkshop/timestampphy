@@ -12,17 +12,19 @@ class TakePictureScreen extends StatefulWidget {
   TakePictureScreenState createState() => TakePictureScreenState();
 }
 
-class TakePictureScreenState extends State<TakePictureScreen> {
+class TakePictureScreenState extends State<TakePictureScreen> with WidgetsBindingObserver {
   CameraUtil cameraUtil;
 
   @override
   void initState() {
     super.initState();
     this._initCamera();
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     cameraUtil.dispose();
     super.dispose();
   }
@@ -50,6 +52,14 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
     Navigator.pushNamed(context, Routes.ConfirmPictureScreen,
         arguments: new ConfirmPictureScreenArgs(picturePath: picture.path));
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if(state == AppLifecycleState.resumed) {
+      cameraUtil.reinitializeCamera();
+      setState(() {});
+    }
   }
 
   @override
