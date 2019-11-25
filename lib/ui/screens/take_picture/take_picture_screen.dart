@@ -12,7 +12,8 @@ class TakePictureScreen extends StatefulWidget {
   TakePictureScreenState createState() => TakePictureScreenState();
 }
 
-class TakePictureScreenState extends State<TakePictureScreen> with WidgetsBindingObserver {
+class TakePictureScreenState extends State<TakePictureScreen>
+    with WidgetsBindingObserver {
   CameraUtil cameraUtil;
 
   @override
@@ -56,7 +57,7 @@ class TakePictureScreenState extends State<TakePictureScreen> with WidgetsBindin
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if(state == AppLifecycleState.resumed) {
+    if (state == AppLifecycleState.resumed) {
       cameraUtil.reinitializeCamera();
       setState(() {});
     }
@@ -74,36 +75,32 @@ class TakePictureScreenState extends State<TakePictureScreen> with WidgetsBindin
         backgroundColor: Colors.black,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Container(
+            margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
             constraints: BoxConstraints(maxHeight: 100),
             padding: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () => Navigator.pop(context),
-                    child: Container(
-                        padding: EdgeInsets.all(10),
-                        child: Icon(Icons.cancel, color: Colors.white)),
-                  ),
+                FlatButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: Icon(Icons.close, color: Colors.white)),
                 ),
                 SizedBox(width: 50),
                 FloatingActionButton(
-                  child: Icon(Icons.camera, color: Colors.lightBlueAccent),
-                  backgroundColor: Colors.white,
+                  child: Icon(Icons.camera, color: Colors.white),
+                  splashColor: Theme.of(context).accentColor,
+                  backgroundColor: Colors.black,
                   onPressed: this._takePicture,
                 ),
                 SizedBox(width: 50),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () => this._pickPicture(),
-                    child: Container(
-                        padding: EdgeInsets.all(10),
-                        child: Icon(Icons.photo_album, color: Colors.white)),
-                  ),
-                ),
+                FlatButton(
+                  onPressed: () => this._pickPicture(),
+                  child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: Icon(Icons.photo_library, color: Colors.white)),
+                )
               ],
             )));
   }

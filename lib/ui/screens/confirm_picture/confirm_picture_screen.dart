@@ -15,6 +15,11 @@ class ConfirmPictureScreen extends StatelessWidget {
 
   const ConfirmPictureScreen(this.args);
 
+  void navigateToHome(context) {
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        Routes.HomeScreen, (Route<dynamic> route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     PictureBloc pictureBloc = BlocProvider.of<PictureBloc>(context);
@@ -26,16 +31,28 @@ class ConfirmPictureScreen extends StatelessWidget {
           child: Image.file(File(args.picturePath)),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.check, color: Colors.lightBlueAccent),
-        backgroundColor: Colors.white,
-        onPressed: () {
-          pictureBloc.addNewPicture(args.picturePath);
-          Navigator.of(context).pushNamedAndRemoveUntil(
-              Routes.HomeScreen, (Route<dynamic> route) => false);
-        },
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          FlatButton(
+            onPressed: () => navigateToHome(context),
+            splashColor: Theme.of(context).accentColor,
+            child: Container(
+                padding: EdgeInsets.all(10),
+                child: Icon(Icons.close, color: Colors.white)),
+          ),
+          SizedBox(width: 50),
+          FloatingActionButton(
+            child: Icon(Icons.check, color: Colors.white),
+            backgroundColor: Theme.of(context).accentColor,
+            onPressed: () {
+              pictureBloc.addNewPicture(args.picturePath);
+              navigateToHome(context);
+            },
+          ),
+        ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
