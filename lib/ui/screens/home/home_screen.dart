@@ -43,7 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: BottomTabNavigation(
         notchedShape: CircularNotchedRectangle(),
-        selectedColor: Colors.lightBlue,
+        selectedColor: Theme.of(context).accentColor,
+        backgroundColor: Color(0xFFEDEFF2),
         onTabSelected: _setSelectedTabIndex,
         items: [
           BottomTabNavigationItem(iconData: Icons.history, text: "Photo history"),
@@ -54,15 +55,15 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(
             _selectedTabIndex == 0 ? "Pictures you took" : "Search for a picture"
         ),
-        backgroundColor: Colors.lightBlueAccent
+        backgroundColor: Theme.of(context).appBarTheme.color
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(
             Icons.camera,
-            color: Colors.lightBlueAccent
+            color: Colors.white
         ),
         onPressed: () => this._openCameraScreen(context),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).accentColor,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
