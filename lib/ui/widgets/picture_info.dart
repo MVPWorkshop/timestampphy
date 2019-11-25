@@ -10,45 +10,41 @@ class PictureInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const labelTextStyle = TextStyle(
-        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.lightBlue);
-
-    const textValue = TextStyle(fontSize: 14);
+    const dateTextStyle = TextStyle(fontSize: 12);
+    const labelTextStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.bold);
+    const txHashTextStyle =
+        TextStyle(fontSize: 14, color: Color(0xFF748091091));
 
     return Card(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         margin: EdgeInsets.symmetric(vertical: 10),
+        elevation: 5,
         child: Container(
-            padding: EdgeInsets.all(15),
             child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 100),
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: Image.file(File(picture.picturePath))),
+              Container(
+                width: 150,
+                height: 200,
+                child: Image.file(File(picture.picturePath), fit: BoxFit.cover),
+              ),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SelectableText(
+                          DateFormat('dd MMM yyyy, HH:mm').format(picture.date),
+                          style: dateTextStyle),
+                      Divider(),
+                      Text("Transaction hash", style: labelTextStyle),
+                      SizedBox(height: 15),
+                      SelectableText(picture.txHash, style: txHashTextStyle)
+                    ],
                   ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text("Time", style: labelTextStyle),
-                          SelectableText(
-                              DateFormat('MMM dd yyyy, HH:mm').format(picture.date),
-                              style: textValue
-                          ),
-                          SizedBox(height: 15),
-                          Text("Transaction hash", style: labelTextStyle),
-                          SelectableText(picture.txHash, style: textValue)
-                        ],
-                      ),
-                    ),
-                  )
-                ])));
+                ),
+              )
+            ])));
   }
 }
