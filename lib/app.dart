@@ -12,6 +12,13 @@ class App extends StatelessWidget {
         title: 'Timestampphy',
         initialRoute: '/',
         onGenerateRoute: Router.generateRoute,
+        theme: ThemeData(
+          accentColor: Color(0xFF5C1DCF),
+          backgroundColor: Colors.white,
+          appBarTheme: AppBarTheme(
+            color: Color(0xFF141414)
+          ),
+        ),
       ),
     );
   }

@@ -58,6 +58,7 @@ class BottomTabNavigationState extends State<BottomTabNavigation> {
 
     return BottomAppBar(
       shape: widget.notchedShape,
+      notchMargin: 10.0,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
